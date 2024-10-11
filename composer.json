@@ -3,8 +3,7 @@
     "license": "MTI",
     "autoload": {
         "psr-4": {
-            "Php\\": "src/",
-            "Php\\Yeiquel\\": "src/Yeiquel/"
+            "Php\\": "src/"
         }
     },
     "require-dev": {
