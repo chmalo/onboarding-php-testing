@@ -15,7 +15,7 @@ class Product
         $this->price = $price;
     }
 
-    public function applyDiscount($percentage)
+    public function applyDiscount($percentage): void
     {
         if ($percentage < 0 || $percentage > 100) {
 
@@ -34,10 +34,10 @@ class Product
 
     public function showInfo(): string
     {
-        return "El producto  {$this->name} tiene un costo de {$this->price}";
+        return "El producto {$this->name} tiene un costo de {$this->price}";
     }
 }
 
 $producto = new Product("arroz", 100);
-$producto->applyDiscount(10);
+$producto->applyDiscount(20);
 echo $producto->showInfo();
