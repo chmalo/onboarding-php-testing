@@ -8,7 +8,7 @@ use Php\Tests\Luis\Product;
  
 class ProductTest extends TestCase
 {
-    public function testItShouldShowInformation()
+    public function testItShouldShowInformation(): void
     {
         $product = new Product("Laptop", 250);
         $showInfo = $product->showInfo();
