@@ -37,7 +37,3 @@ class Product
         return "El producto {$this->name} tiene un costo de {$this->price}";
     }
 }
-
-$producto = new Product("arroz", 100);
-$producto->applyDiscount(20);
-echo $producto->showInfo();
