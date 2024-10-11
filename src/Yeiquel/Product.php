@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Yeiquel\Product;
+namespace Php\Yeiquel;
 
 class Product 
 {
