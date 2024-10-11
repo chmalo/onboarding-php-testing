@@ -3,7 +3,7 @@
     "license": "MTI",
     "autoload": {
         "psr-4": {
-            "Php\\Tests\\": "src/"
+            "Php\\": "src/"
         }
     },
     "require-dev": {
