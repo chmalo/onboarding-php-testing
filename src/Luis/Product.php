@@ -4,8 +4,8 @@ namespace Php\Tests\Luis;
 
 class Product
 {
-    private $name;
-    private $price;
+    protected $name;
+    protected $price;
 
     public function __construct(
         string $name,

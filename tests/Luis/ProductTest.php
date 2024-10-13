@@ -2,6 +2,7 @@
 
 namespace Php\Tests;
 
+use Php\Tests\Luis\ProductClothes;
 use PHPUnit\Framework\TestCase;
 use Php\Tests\Luis\Product;
 use Php\Tests\Luis\ElectronicProduct;
@@ -18,14 +19,14 @@ class ProductTest extends TestCase
     }
 
 
-    public function testApplyDiscountElectronic()
+    public function testApplyDiscountElectronic(): void
     {
         $product = new ElectronicProduct("Laptop", 200);
         $product->applyDiscountElectronic(21);
         $this->assertEquals(160, $product->finalPrice());
     }
 
-    public function testPriceDiscountElectronic()
+    public function testPriceDiscountElectronic(): void
     {
         $product = new ElectronicProduct("Laptop", 100);
         $this->expectException(\InvalidArgumentException::class);
@@ -33,16 +34,24 @@ class ProductTest extends TestCase
         $product->applyDiscountElectronic(21);
     }
 
-    public function testApplyDiscountFood()
+    public function testApplyDiscountFood(): void
     {
         $product = new FoodProduct("Laptop", 100);
         $this->assertEquals(90, $product->finalPrice());
     }
 
-    public function testApplyDiscountAdditionalFood()
+    public function testApplyDiscountAdditionalFood(): void
     {
         $product = new FoodProduct("Laptop", 100);
         $product->applyAdditionalDiscount(10);
         $this->assertEquals(81, $product->finalPrice());
+    }
+
+
+    public function testApplyDiscountClothes(): void
+    {
+        $product = new ProductClothes("Laptop",  300);
+        $product->applyDiscount(10);
+        $this->assertEquals(229.5, $product->finalPrice());
     }
 }
