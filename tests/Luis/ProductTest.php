@@ -5,6 +5,7 @@ namespace Php\Tests;
 use PHPUnit\Framework\TestCase;
 use Php\Tests\Luis\Product;
 use Php\Tests\Luis\ElectronicProduct;
+use Php\Tests\Luis\FoodProduct;
 
 class ProductTest extends TestCase
 {
@@ -30,5 +31,18 @@ class ProductTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
         $product->applyDiscountElectronic(21);
+    }
+
+    public function testApplyDiscountFood()
+    {
+        $product = new FoodProduct("Laptop", 100);
+        $this->assertEquals(90, $product->finalPrice());
+    }
+
+    public function testApplyDiscountAdditionalFood()
+    {
+        $product = new FoodProduct("Laptop", 100);
+        $product->applyAdditionalDiscount(10);
+        $this->assertEquals(81, $product->finalPrice());
     }
 }
