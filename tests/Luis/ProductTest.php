@@ -36,22 +36,29 @@ class ProductTest extends TestCase
 
     public function testApplyDiscountFood(): void
     {
-        $product = new FoodProduct("Laptop", 100);
+        $product = new FoodProduct("Arroz", 100);
         $this->assertEquals(90, $product->finalPrice());
     }
 
     public function testApplyDiscountAdditionalFood(): void
     {
-        $product = new FoodProduct("Laptop", 100);
-        $product->applyAdditionalDiscount(10);
+        $product = new FoodProduct("Arroz", 100);
+        $product->applyDiscount(10);
         $this->assertEquals(81, $product->finalPrice());
     }
 
 
     public function testApplyDiscountClothes(): void
     {
-        $product = new ProductClothes("Laptop",  300);
+        $product = new ProductClothes("Camisa",  250);
         $product->applyDiscount(10);
-        $this->assertEquals(229.5, $product->finalPrice());
+        $this->assertEquals(191.25, $product->finalPrice());
+    }
+
+    public function testApplyDiscountClothess(): void
+    {
+        $product = new ProductClothes("Camisa",  250);
+        $product->applyDiscount(0);
+        $this->assertEquals(212.5, $product->finalPrice());
     }
 }

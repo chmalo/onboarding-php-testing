@@ -15,6 +15,14 @@ class Product
         $this->price = $price;
     }
 
+    private function valitePrice(float $precio): float
+    {
+        if ($precio <= 0) {
+            throw new \InvalidArgumentException("El precio debe ser mayor a 0.");
+        }
+        return $precio;
+    }
+
     public function applyDiscount($percentage): void
     {
         if ($percentage < 0 || $percentage > 100) {

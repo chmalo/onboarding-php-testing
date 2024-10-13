@@ -16,9 +16,5 @@ class ElectronicProduct extends Product
         if ($this->finalPrice() < 100) {
             throw new \InvalidArgumentException("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
         }
-
     }
-
-
-
 }
