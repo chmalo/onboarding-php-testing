@@ -13,9 +13,10 @@ class Product
     ) {
         $this->name = $name;
         $this->price = $price;
+        $this->validatePrice($price);
     }
 
-    private function valitePrice(float $precio): float
+    private function validatePrice($precio): float
     {
         if ($precio <= 0) {
             throw new \InvalidArgumentException("El precio debe ser mayor a 0.");
