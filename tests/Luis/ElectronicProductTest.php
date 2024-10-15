@@ -26,12 +26,13 @@ class ElectronicProductTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
-        
+
         $product = new ElectronicProduct("Laptop", 100);
         $product->applyDiscountElectronic(20);
     }
 
-    public function testApplyDiscountElectronicBoundary() {
+    public function testApplyDiscountElectronicBoundary(): void
+    {
         $product = new ElectronicProduct("Smartphone", 125);
         $product->applyDiscountElectronic(20);
         $this->assertEquals(100, $product->finalPrice());

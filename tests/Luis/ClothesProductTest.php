@@ -21,7 +21,4 @@ class ClothesProductTest extends TestCase
         $product->applyDiscount(0);
         $this->assertEquals(212.5, $product->finalPrice());
     }
-
-
-
 }
