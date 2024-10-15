@@ -28,7 +28,7 @@ class Product
     {
         if ($percentage < 0 || $percentage > 100) {
 
-            throw new \InvalidArgumentException("El porcentaje no puede ser en negativo o estás colocando un porcentaje mayor a 100");
+            throw new \InvalidArgumentException("El porcentaje no puede ser en negativo o estás colocando un porcentaje mayor a 100.");
         }
 
         $descount = $this->price * ($percentage / 100);

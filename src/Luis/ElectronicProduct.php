@@ -10,7 +10,6 @@ class ElectronicProduct extends Product
     public function applyDiscountElectronic($percentage): void
     {
         $percentage = min($percentage, 20);
-
         parent::applyDiscount($percentage);
 
         if ($this->finalPrice() < 100) {

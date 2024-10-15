@@ -17,7 +17,7 @@ class FoodProduct extends Product
     }
 
 
-    public function applyAdditionalDiscount($percentage): void
+    public function applyDiscount($percentage): void
     {
         parent::applyDiscount($percentage);
     }

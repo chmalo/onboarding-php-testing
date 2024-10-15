@@ -2,23 +2,11 @@
 
 namespace Php\Tests;
 
-use Php\Tests\Luis\ProductClothes;
 use PHPUnit\Framework\TestCase;
 use Php\Tests\Luis\Product;
-use Php\Tests\Luis\ElectronicProduct;
-use Php\Tests\Luis\FoodProduct;
 
 class ProductTest extends TestCase
 {
-
-    public function testValidatePrice(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("El precio debe ser mayor a 0.");
-        $product = new Product("Laptop", 0);
-        
-    }
-
 
     public function testItShouldShowInformation(): void
     {
@@ -27,47 +15,33 @@ class ProductTest extends TestCase
         $this->assertEquals("El producto Laptop tiene un costo de 250", $showInfo);
     }
 
-
-    public function testApplyDiscountElectronic(): void
+    public function testDiscountCorrect(): void
     {
-        $product = new ElectronicProduct("Laptop", 200);
-        $product->applyDiscountElectronic(21);
-        $this->assertEquals(160, $product->finalPrice());
+        $product = new Product("Laptop Lenovo I3", 1000);
+        $product->applyDiscount(20);
+        $this->assertEquals(800, $product->finalprice());
     }
 
-    public function testPriceDiscountElectronic()
+    public function testValidatePrice(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
-        $product = new ElectronicProduct("Laptop", 100);
-        $product->applyDiscountElectronic(21);
+        $this->expectExceptionMessage("El precio debe ser mayor a 0.");
+        $product = new Product("Laptop", -100);
     }
 
-    public function testApplyDiscountFood(): void
+    public function testNegativeDiscount(): void
     {
-        $product = new FoodProduct("Arroz", 100);
-        $this->assertEquals(90, $product->finalPrice());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("El porcentaje no puede ser en negativo o estás colocando un porcentaje mayor a 100.");
+        $product = new Product("Laptop", 100);
+        $product->applyDiscount(-1);
     }
 
-    public function testApplyDiscountAdditionalFood(): void
+    public function testDiscountGreaterThan100(): void
     {
-        $product = new FoodProduct("Arroz", 100);
-        $product->applyDiscount(10);
-        $this->assertEquals(81, $product->finalPrice());
-    }
-
-
-    public function testApplyDiscountClothes(): void
-    {
-        $product = new ProductClothes("Camisa",  250);
-        $product->applyDiscount(10);
-        $this->assertEquals(191.25, $product->finalPrice());
-    }
-
-    public function testApplyDiscountClothess(): void
-    {
-        $product = new ProductClothes("Camisa",  250);
-        $product->applyDiscount(0);
-        $this->assertEquals(212.5, $product->finalPrice());
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("El porcentaje no puede ser en negativo o estás colocando un porcentaje mayor a 100.");
+        $product = new Product("Laptop", 100);
+        $product->applyDiscount(120);
     }
 }
