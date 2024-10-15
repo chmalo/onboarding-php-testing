@@ -10,11 +10,20 @@ use Php\Tests\Luis\FoodProduct;
 
 class ProductTest extends TestCase
 {
+
+    public function testValidatePrice(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("El precio debe ser mayor a 0.");
+        $product = new Product("Laptop", 0);
+        
+    }
+
+
     public function testItShouldShowInformation(): void
     {
         $product = new Product("Laptop", 250);
         $showInfo = $product->showInfo();
-
         $this->assertEquals("El producto Laptop tiene un costo de 250", $showInfo);
     }
 
@@ -26,11 +35,11 @@ class ProductTest extends TestCase
         $this->assertEquals(160, $product->finalPrice());
     }
 
-    public function testPriceDiscountElectronic(): void
+    public function testPriceDiscountElectronic()
     {
-        $product = new ElectronicProduct("Laptop", 100);
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
+        $product = new ElectronicProduct("Laptop", 100);
         $product->applyDiscountElectronic(21);
     }
 
