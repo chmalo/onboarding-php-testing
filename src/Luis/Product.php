@@ -12,20 +12,26 @@ class Product
         float $price
     ) {
         $this->name = $name;
-        $this->price = $price;
-        $this->validatePrice($price);
+        $this->price = $this->validatePrice($price);
+        
     }
 
-    private function validatePrice($precio): float
+    private function validatePrice($price): float
     {
-        if ($precio <= 0) {
+        if ($price <= 0) {
             throw new \InvalidArgumentException("El precio debe ser mayor a 0.");
         }
-        return $precio;
+        return $price;
     }
 
     public function applyDiscount($percentage): void
     {
+
+        if ($percentage === 0) {
+            return ;
+        }
+
+
         if ($percentage < 0 || $percentage > 100) {
 
             throw new \InvalidArgumentException("El porcentaje no puede ser en negativo o estás colocando un porcentaje mayor a 100.");
@@ -36,7 +42,17 @@ class Product
         $this->price -= $descount;
     }
 
-    public function finalPrice(): float
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function price(): float
+    {
+        return $this->price;
+    }
+
+    public function priceWithDiscount(): float
     {
         return $this->price;
     }
