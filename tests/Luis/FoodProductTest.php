@@ -11,13 +11,13 @@ class FoodProductTest extends TestCase
     public function testApplyDiscountFood(): void
     {
         $product = new FoodProduct("Arroz", 100);
-        $this->assertEquals(90, $product->finalPrice());
+        $this->assertEquals(90, $product->priceWithDiscount());
     }
 
     public function testApplyDiscountAdditionalFood(): void
     {
         $product = new FoodProduct("Arroz", 100);
         $product->applyDiscount(10);
-        $this->assertEquals(81, $product->finalPrice());
+        $this->assertEquals(81, $product->priceWithDiscount());
     }
 }

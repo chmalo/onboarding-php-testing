@@ -52,8 +52,37 @@ class ElectronicProduct extends Product
         parent::applyDiscount($this->discountPercentage);
 
 
-        // if ($this->finalPrice() < 100) {
-        //     throw new \InvalidArgumentException("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
-        // }
+        if ($this->priceWithDiscount() < 100) {
+            throw new \InvalidArgumentException("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
+        }
+    }
+
+    public function validateNegativeWarranty()
+    {
+        if ($this->warranty < 0) {
+    
+            throw new \InvalidArgumentException("El valor de la garantía debe ser mayor a 0.");
+        }
+
+    }
+
+    public function validateWarrantyRange(): void
+    {
+        if ($this->warranty > 36) {
+            throw new \InvalidArgumentException("El valor de la garantía debe ser menor a 36 meses.");
+        }
+    }
+
+    public function applyDiscountWarranty(): void
+    {
+
+        if ($this->warranty < 24) {
+            return;
+        }
+
+        parent::applyDiscount($this->discountPercentage);
+        
+        $additionalDiscount = $this->price * (10 / 100);
+        $this->price -= $additionalDiscount;
     }
 }
