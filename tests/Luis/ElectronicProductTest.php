@@ -11,11 +11,11 @@ class ElectronicProductTest extends TestCase
 
     public function testValidateProductExist(): void
     {
-        $product = new ElectronicProduct("Laptop", 200);
+        $product = new ElectronicProduct("Laptop", 200, 10, 20);
         $this->assertEquals("Laptop", $product->name());
         $this->assertEquals(200, $product->price());
-        $this->assertEquals(0, $product->warranty());
-        $this->assertEquals(0, $product->discountPercentage());
+        $this->assertEquals(10, $product->warranty());
+        $this->assertEquals(20, $product->discountPercentage());
     }
 
     public function testValidateProductDiscount(): void
@@ -66,66 +66,35 @@ class ElectronicProductTest extends TestCase
 
     public function testInvalidNegativeWarranty(): void
     {
-        $product = new ElectronicProduct("Laptop Ryzen 20", 2000, -1);
-
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("El valor de la garantía debe ser mayor a 0.");
 
-        $product->validateNegativeWarranty();
+        new ElectronicProduct("Laptop Ryzen 20", 2000, -1);
+        
     }
 
     public function testValidateWarrantyRange()
     {
-        $product = new ElectronicProduct("Laptop Ryzen 20", 2000, 40);
-
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("El valor de la garantía debe ser menor a 36 meses.");
+        $this->expectExceptionMessage("El valor de la garantía no debe ser mayor a los 36 meses.");
 
-        $product->validateWarrantyRange();
+        new ElectronicProduct("Laptop Ryzen 20", 2000, 40);
+
     }
 
-    public function testApplyDiscountWarranty()
+    public function testApplyDiscountWarranty(): void
     {
         $product = new ElectronicProduct("Laptop Ryzen 20", 2000, 25, 10);
-        $product->applyDiscountWarranty();
+        $product->applyDiscountElectronic();
 
         $this->assertEquals(1620, $product->priceWithDiscount());
     }
 
-    public function testValidateWarrantyExist(): void
+    public function testApplyDiscountWarrantyNULL(): void
     {
-        $product = new ElectronicProduct("Laptop", 200, 12);
-        $this->assertEquals(12, $product->warranty());
+        $product = new ElectronicProduct("Laptop Ryzen 20", 2000, 25);
+        $product->applyDiscountWarranty();
 
+        $this->assertEquals(1800, $product->priceWithDiscount());
     }
-
-
-
-
-
-
-
-
-    // public function testApplyDiscountMinorElectronic(): void
-    // {
-    //     $product = new ElectronicProduct("Laptop", 200);
-    //     $product->applyDiscountElectronic(10);
-    //     $this->assertEquals(180, $product->finalPrice());
-    // }
-
-    // public function testPriceDiscountElectronic(): void
-    // {
-    //     $this->expectException(\InvalidArgumentException::class);
-    //     $this->expectExceptionMessage("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
-
-    //     $product = new ElectronicProduct("Laptop", 100);
-    //     $product->applyDiscountElectronic(20);
-    // }
-
-    // public function testApplyDiscountElectronicBoundary(): void
-    // {
-    //     $product = new ElectronicProduct("Smartphone", 125);
-    //     $product->applyDiscountElectronic(20);
-    //     $this->assertEquals(100, $product->finalPrice());
-    // }
 }

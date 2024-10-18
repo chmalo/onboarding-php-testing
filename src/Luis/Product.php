@@ -16,7 +16,7 @@ class Product
         
     }
 
-    private function validatePrice($price): float
+    private function validatePrice(float $price): float
     {
         if ($price <= 0) {
             throw new \InvalidArgumentException("El precio debe ser mayor a 0.");
@@ -24,7 +24,7 @@ class Product
         return $price;
     }
 
-    public function applyDiscount($percentage): void
+    public function applyDiscount(float $percentage): void
     {
 
         if ($percentage === 0) {
@@ -37,9 +37,10 @@ class Product
             throw new \InvalidArgumentException("El porcentaje no puede ser en negativo o estás colocando un porcentaje mayor a 100.");
         }
 
-        $descount = $this->price * ($percentage / 100);
+        $calculatePercentage = $this->calculatePercentage($percentage);
+        $discount = $this->price * $calculatePercentage;
 
-        $this->price -= $descount;
+        $this->price -= $discount;
     }
 
     public function name(): string
@@ -60,5 +61,10 @@ class Product
     public function showInfo(): string
     {
         return "El producto {$this->name} tiene un costo de {$this->price}";
+    }
+
+    public function calculatePercentage(float $percentage): float
+    {
+        return $percentage / 100;
     }
 }

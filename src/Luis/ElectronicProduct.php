@@ -9,6 +9,8 @@ class ElectronicProduct extends Product
 
     private $warranty;
     private $discountPercentage;
+    private const WARRANTY_MIN_DISCOUNT = 24;
+    private const DISCOUNT_ADDITIONAL_PERCENTAGE = 10;
 
     public function __construct(
         string $name,
@@ -19,11 +21,11 @@ class ElectronicProduct extends Product
     ) {
         parent::__construct($name, $price);
         $this->price =  $this->validatePriceElectronic($price);
-        $this->warranty = $warranty;
+        $this->warranty = $this->validateWarranty($warranty);
         $this->discountPercentage = $discountPercentage;
     }
 
-    public function validatePriceElectronic($price)
+    public function validatePriceElectronic(float $price): float
     {
         if ($price < 100) {
             throw new \InvalidArgumentException("El precio de los electrónicos no puede ser menor a $100.");
@@ -49,40 +51,48 @@ class ElectronicProduct extends Product
             throw new \InvalidArgumentException("El descuento no puede ser mayor al 20%.");
         }
 
-        parent::applyDiscount($this->discountPercentage);
+        $this->applyDiscount($this->discountPercentage);
 
+        $this->applyDiscountWarranty();
 
         if ($this->priceWithDiscount() < 100) {
             throw new \InvalidArgumentException("El precio de los electrónicos no puede ser menor a $100 después del descuento.");
         }
     }
 
-    public function validateNegativeWarranty()
+    public function validateWarranty(int $warranty): int
     {
-        if ($this->warranty < 0) {
-    
-            throw new \InvalidArgumentException("El valor de la garantía debe ser mayor a 0.");
-        }
+        $this->validateNegativeWarranty($warranty);
+        $this->validateWarrantyRange($warranty);
 
+        return $warranty;
     }
 
-    public function validateWarrantyRange(): void
+    public function validateNegativeWarranty(int $warranty): void
     {
-        if ($this->warranty > 36) {
-            throw new \InvalidArgumentException("El valor de la garantía debe ser menor a 36 meses.");
+        if ($warranty < 0) {
+
+            throw new \InvalidArgumentException("El valor de la garantía debe ser mayor a 0.");
+        }
+    }
+
+    public function validateWarrantyRange(int $warranty): void
+    {
+        if ($warranty > 36) {
+            throw new \InvalidArgumentException("El valor de la garantía no debe ser mayor a los 36 meses.");
         }
     }
 
     public function applyDiscountWarranty(): void
     {
 
-        if ($this->warranty < 24) {
+        if ($this->warranty < self::WARRANTY_MIN_DISCOUNT) {
             return;
         }
 
-        parent::applyDiscount($this->discountPercentage);
+        $calculatePercentage = $this->calculatePercentage(self::DISCOUNT_ADDITIONAL_PERCENTAGE);
+        $additionalDiscount = $this->price * $calculatePercentage;
         
-        $additionalDiscount = $this->price * (10 / 100);
         $this->price -= $additionalDiscount;
     }
 }
