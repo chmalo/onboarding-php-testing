@@ -3,26 +3,31 @@
 namespace Php\Tests\Luis;
 
 use Php\Tests\Luis\Product;
+use Datetime;
 
 class ElectronicProduct extends Product
 {
 
     private $warranty;
     private $discountPercentage;
+    private $expirationDate;
     private const WARRANTY_MIN_DISCOUNT = 24;
     private const DISCOUNT_ADDITIONAL_PERCENTAGE = 10;
+    
 
     public function __construct(
         string $name,
         float $price,
         ?int $warranty = 0,
-        ?float $discountPercentage = 0
+        ?float $discountPercentage = 0,
+        string $expirationDate
 
     ) {
         parent::__construct($name, $price);
         $this->price =  $this->validatePriceElectronic($price);
         $this->warranty = $this->validateWarranty($warranty);
         $this->discountPercentage = $discountPercentage;
+        $this->expirationDate = $this->validateExpirationDate($expirationDate);
     }
 
     public function validatePriceElectronic(float $price): float
@@ -94,5 +99,36 @@ class ElectronicProduct extends Product
         $additionalDiscount = $this->price * $calculatePercentage;
         
         $this->price -= $additionalDiscount;
+    }
+
+    public function validateExpirationDate(string $expirationDate): string
+    {
+        if (empty($expirationDate)) {
+            throw new \InvalidArgumentException("La fecha de expiración es obligatoria.");
+        }
+
+        $this->validateDateFormat($expirationDate);
+        $this->validateFutureDate($expirationDate);
+
+        return $expirationDate;
+    }
+
+    public function validateDateFormat(string $expirationDate): void
+    {
+        $date = DateTime::createFromFormat('Y-m-d', $expirationDate);
+
+        if (!$date || $date->format('Y-m-d') !== $expirationDate) {
+            throw new \InvalidArgumentException("La fecha debe ser válida en formato YYYY-MM-DD.");
+        }
+    }
+
+    public function validateFutureDate(string $expirationDate): void
+    {
+        $date = DateTime::createFromFormat('Y-m-d', $expirationDate);
+        $currentDate = new DateTime();
+
+        if ($date < $currentDate) {
+            throw new \InvalidArgumentException("La fecha de expiración no puede ser anterior a la fecha actual.");
+        }
     }
 }
