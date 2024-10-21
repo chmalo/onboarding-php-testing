@@ -37,13 +37,4 @@ class ClothesProductTest extends TestCase
         $product->applyDiscountClothes();
         $this->assertEquals(382.5, $product->priceWithDiscount());
     }
-
-
-
-    // public function testApplyDiscountClothess(): void
-    // {
-    //     $product = new ClothesProduct("Camisa",  250);
-    //     $product->applyDiscount(0);
-    //     $this->assertEquals(212.5, $product->priceWithDiscount());
-    // }
 }

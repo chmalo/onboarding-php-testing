@@ -25,7 +25,6 @@ class ClothesProduct extends Product
         parent::__construct($name, $price);
         $this->sizes = $this->validateSizes($sizes);
         $this->discountPercentage = $discountPercentage;
-
     }
 
     public function sizes(): string
@@ -54,13 +53,13 @@ class ClothesProduct extends Product
 
         $calculatePercentege = $this->calculatePercentage(self::DISCOUNT_CLOTHES);
         $additionalDiscount = $this->price * $calculatePercentege;
-        
+
         $this->price -= $additionalDiscount;
     }
 
     public function validateUppercaseConversion(string $sizes): string
     {
-        return strtoupper ($sizes);
+        return strtoupper($sizes);
     }
 
     public function validateSizes(string $sizes): string
@@ -73,8 +72,4 @@ class ClothesProduct extends Product
 
         return $validateUppercaseConversion;
     }
-
-    
-
-
 }
