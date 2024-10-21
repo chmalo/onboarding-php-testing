@@ -2,8 +2,6 @@
 
 namespace Php\Yeiquel;
 
-use PHPUnit\Framework\MockObject\ReturnValueNotConfiguredException;
-
 class ClothingProduct extends Product
 {
     private const PRICE_MAX = 200.0;
@@ -34,7 +32,7 @@ class ClothingProduct extends Product
     public function applyAditionalDiscount(): void
     {
         // Clasula de Guarda aplicada 
-        if ($this->Price() <= self::PRICE_MAX) {
+        if ($this->price() <= self::PRICE_MAX) {
             return;
         }
 

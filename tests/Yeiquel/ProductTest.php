@@ -12,13 +12,13 @@ class ProductTest extends TestCase
         $electronic = new ElectronicProduct("Television", 150.0);
         $electronic->setDiscountPercentage(25.0); // Maximo descuento de 20%
         $electronic->applyDiscount();
-        $this->assertEquals(120.0, $electronic->Price());
+        $this->assertEquals(120.0, $electronic->price());
     }
 
     public function testFoodProduct(): void
     {
-        $food = new FoodProduct("Bread", 50.0);
-        $this->assertEquals(45.0, $food->Price());
+        $food = new FoodProduct("Bread", 50.0, "31-12-2024");
+        $this->assertEquals(45.0, $food->price());
     }
 
     public function testClothingProduct(): void
@@ -26,6 +26,14 @@ class ProductTest extends TestCase
         $clothing = new ClothingProduct("Jacket", 250.0, 'L');
         $clothing->setDiscountPercentage(10.0);
         $clothing->applyDiscount();
-        $this->assertEquals(191.25, $clothing->Price());
+        $this->assertEquals(191.25, $clothing->price());
+    }
+
+    public function testClothingProductValue0(): void
+    {
+        $clothing = new ClothingProduct("Jacket", 250.0, 'L');
+        $clothing->setDiscountPercentage(100);
+        $clothing->applyDiscount();
+        $this->assertEquals(0, $clothing->price());
     }
 }
