@@ -29,16 +29,21 @@ class FoodProduct extends Product
         return $this->discountPercentage;
     }
 
+    public function expirationDate(): string
+    {
+        return $this->expirationDate;
+    }
+
     public function applyDiscountFood(): void
     {
         $this->applyDiscount(self::FIXED_DISCOUNT);
 
-        $this->applyDiscountAdditional($this->discountPercentage);
+        $this->applyDiscountAdditional();
     }
 
-    public function applyDiscountAdditional(?float $discountPercentage): void
+    public function applyDiscountAdditional(): void
     {
-        if ($discountPercentage <= 0) {
+        if ($this->discountPercentage <= 0) {
             return;
         }
 

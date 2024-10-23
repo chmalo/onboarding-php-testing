@@ -17,7 +17,7 @@ class ElectronicProduct extends Product
         string $name,
         float $price,
         ?int $warranty = 0,
-        ?float $discountPercentage = 0,
+        ?float $discountPercentage = 0
 
     ) {
         parent::__construct($name, $price);
