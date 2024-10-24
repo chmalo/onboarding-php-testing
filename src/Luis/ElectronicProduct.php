@@ -12,6 +12,7 @@ class ElectronicProduct extends Product
     private const WARRANTY_MIN_DISCOUNT = 24;
     private const DISCOUNT_ADDITIONAL_PERCENTAGE = 10;
 
+
     public function __construct(
         string $name,
         float $price,
@@ -92,7 +93,7 @@ class ElectronicProduct extends Product
 
         $calculatePercentage = $this->calculatePercentage(self::DISCOUNT_ADDITIONAL_PERCENTAGE);
         $additionalDiscount = $this->price * $calculatePercentage;
-        
+
         $this->price -= $additionalDiscount;
     }
 }
