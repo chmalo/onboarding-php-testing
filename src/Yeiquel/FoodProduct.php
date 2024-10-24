@@ -47,6 +47,11 @@ class FoodProduct extends Product
     private function validDate(string $validDate): bool
     {
         $date = \DateTime::createFromFormat('Y-m-d', $validDate);
-        return $date && $date->format('Y-m-d') === $validDate;
+
+        if (!$date || $date->format('Y-m-d') !== $validDate) {
+            throw new \InvalidArgumentException("La fecha de expiración no es válida. Debe estar en formato YYYY-MM-DD.");
+        }
+
+        return true;
     }
 }
