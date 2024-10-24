@@ -5,8 +5,8 @@ namespace Php\Yeiquel;
 class Product
 {
     private string $name;
-    private float $price;
-    private float $discountPercentage;
+    public float $price;
+    public float $discountPercentage;
 
     public function __construct(string $name, float $price)
     {
