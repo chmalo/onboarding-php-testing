@@ -7,28 +7,37 @@ class FoodProduct extends Product
     private string $expirationDate;
 
     private const FIXED_DISCOUNT = 10.0;
+    private float $aditionalPercentage;
 
-    public function __construct(string $name, float $price, string $expirationDate)
+    public function __construct(string $name, float $price, string $expirationDate, float $aditionalPercentage = 0)
     {
         parent::__construct($name, $price);
-        $this->setExpirationDate($expirationDate);
+        $this->expirationDate = $this->validateExpirationDate($expirationDate);
+        $this->aditionalPercentage = $aditionalPercentage;
+    }
+
+    public function applyDiscountFoodProduct(): void
+    {
+        $this->setDiscountPercentage(self::FIXED_DISCOUNT);
+        $this->applyDiscount();
+        $this->applyDiscountAditional();
+    }
+
+    public function applyDiscountAditional()
+    {
+        if ($this->aditionalPercentage <= 0) {
+            return;
+        }
+
+        $this->setDiscountPercentage($this->aditionalPercentage);
         $this->applyDiscount();
     }
 
-    public function setDiscountPercentage(float $percentage): void
+    public function validateExpirationDate(string $expirationDate): string
     {
-        $this->discountPercentage += $percentage;
-    }
+        $date = \DateTime::createFromFormat('Y-m-d', $expirationDate);
 
-    public function applyDiscount(): void
-    {
-        $this->discountPercentage = self::FIXED_DISCOUNT;
-        $this->applyDiscount();
-    }
-
-    public function setExpirationDate(string $expirationDate): void
-    {
-        if (!$this->validDate($expirationDate)) {
+        if (!$date || $date->format('Y-m-d') !== $expirationDate) {
             throw new \InvalidArgumentException("La fecha de expiración no es válida. Debe estar en formato YYYY-MM-DD.");
         }
 
@@ -36,7 +45,7 @@ class FoodProduct extends Product
             throw new \InvalidArgumentException("La fecha de expiración debe ser una fecha futura.");
         }
 
-        $this->expirationDate = $expirationDate;
+        return $expirationDate;
     }
 
     public function getExpirationDate(): string
@@ -44,14 +53,4 @@ class FoodProduct extends Product
         return $this->expirationDate;
     }
 
-    private function validDate(string $validDate): bool
-    {
-        $date = \DateTime::createFromFormat('Y-m-d', $validDate);
-
-        if (!$date || $date->format('Y-m-d') !== $validDate) {
-            throw new \InvalidArgumentException("La fecha de expiración no es válida. Debe estar en formato YYYY-MM-DD.");
-        }
-
-        return true;
-    }
 }

@@ -21,7 +21,6 @@ class ClothingProduct extends Product
         return $this->size;
     }
 
-
     public function applyDiscountClothing(): void
     {
         $this->applyDiscount();
@@ -31,7 +30,6 @@ class ClothingProduct extends Product
 
     public function applyAditionalDiscount(): void
     {
-        // Clasula de Guarda aplicada 
         if ($this->price() <= self::PRICE_MAX) {
             return;
         }

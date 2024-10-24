@@ -10,21 +10,15 @@ class FoodProductTest extends TestCase
     public function testApplyDiscountAutomatically()
     {
         $food = new FoodProduct("Pera", 50.0, "2024-12-31");
+        $food->applyDiscountFoodProduct();
         $this->assertEquals(45.0, $food->price());
-
-        $food = new FoodProduct("Manzana", 20.0, "2024-12-31");
-        $this->assertEquals(18.0, $food->price());
     }
 
-    public function testSetDiscountPercentage()
+    public function testApplyDiscountAditional()
     {
-        $food = new FoodProduct("Leche", 30.0, "2024-12-31");
-        $food->setDiscountPercentage(10.0); //Error al sumar el 10% + 10%
-        $this->assertEquals(24.0, $food->price());
-
-        $food = new FoodProduct("Jugo", 40.0, "2024-12-31");
-        $food->setDiscountPercentage(20.0);
-        $this->assertEquals(28.0, $food->price());
+        $food = new FoodProduct("Pera", 50.0, "2024-12-31", 10);
+        $food->applyDiscountFoodProduct();
+        $this->assertEquals(40.5, $food->price());
     }
 
     public function testSetExpirationDateValid()
