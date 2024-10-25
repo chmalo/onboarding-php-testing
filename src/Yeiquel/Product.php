@@ -5,8 +5,8 @@ namespace Php\Yeiquel;
 class Product
 {
     private string $name;
-    private float $price;
-    private float $discountPercentage;
+    public float $price;
+    public float $discountPercentage;
 
     public function __construct(string $name, float $price)
     {
@@ -36,6 +36,11 @@ class Product
     public function discountPercentage(): float
     {
         return $this->discountPercentage;
+    }
+
+    public function priceWithDiscount(): float
+    {
+        return $this->price;
     }
 
     public function setDiscountPercentage(float $percentage): void
