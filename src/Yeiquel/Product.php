@@ -38,6 +38,11 @@ class Product
         return $this->discountPercentage;
     }
 
+    public function priceWithDiscount(): float
+    {
+        return $this->price;
+    }
+
     public function setDiscountPercentage(float $percentage): void
     {
         if ($percentage < 0 || $percentage > 100) {

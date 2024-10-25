@@ -24,7 +24,7 @@ class FoodProductTest extends TestCase
     public function testSetExpirationDateValid()
     {
         $food = new FoodProduct("Milk", 30.0, "2024-12-31");
-        $this->assertEquals("2024-12-31", $food->getExpirationDate());
+        $this->assertEquals("2024-12-31", $food->ExpirationDate());
     }
 
     public function testSetExpirationDateInvalidFormat()

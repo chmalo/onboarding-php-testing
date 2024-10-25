@@ -48,7 +48,7 @@ class FoodProduct extends Product
         return $expirationDate;
     }
 
-    public function getExpirationDate(): string
+    public function ExpirationDate(): string
     {
         return $this->expirationDate;
     }
